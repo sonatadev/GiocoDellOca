@@ -14,10 +14,16 @@ public class Gioco {
     }
 
     public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
         TavoloDaGioco tavolo = new TavoloDaGioco();
 
         System.out.println("Quante persone giocheranno?");
-        int numeroGiocatori = 2;
+        int numeroGiocatori = Integer.parseInt(sc.nextLine());
+
+        if(numeroGiocatori <= 0){
+            System.out.println("Deve esserci almeno un giocatore! Il programma terminerà");
+            System.exit(1);
+        }
 
         Gioco gioco = new Gioco(tavolo, numeroGiocatori);
 
@@ -68,6 +74,8 @@ public class Gioco {
     private void setNuovaPosizione(int valoreDado, Map<Integer, TavoloDaGioco.Evento> eventi){
         int numeroPosizioneAttuale = listaGiocatori.get(this.turnoGiocatore).getPosizione().getNumeroPosizione();
         int nuovaPosizione = numeroPosizioneAttuale + valoreDado;
+        //System.out.println("NumPosAct:" + numeroPosizioneAttuale + " Dado: " + valoreDado + " NuovaPos: " + nuovaPosizione);
+
 
         if(nuovaPosizione == 30)
             finePartita();
@@ -79,7 +87,7 @@ public class Gioco {
                 System.out.println("Dopo l'imprevisto " + this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + posizioneDopoEvento + ", di conseguenza tornerà indietro dell'eccesso di caselle rispetto alla casella 30.");
                 posizioneDopoEvento = 30 - (posizioneDopoEvento - 30);
                 System.out.println("Dopo lo spostamento causato dall'eccesso " + this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + posizioneDopoEvento);
-                this.listaGiocatori.get(this.turnoGiocatore).setPosizione(this.tavoloDaGioco.getTavolo().get(nuovaPosizione));
+                this.listaGiocatori.get(this.turnoGiocatore).setPosizione(this.tavoloDaGioco.getTavolo().get(posizioneDopoEvento));
                 System.out.println();
             }
             else{
@@ -93,8 +101,25 @@ public class Gioco {
                 System.out.println(this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + nuovaPosizione + ", di conseguenza tornerà indietro dell'eccesso di caselle rispetto alla casella 30.");
                 nuovaPosizione = 30 - (nuovaPosizione - 30);
                 System.out.println("Dopo lo spostamento causato dall'eccesso " + this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + nuovaPosizione);
-                this.listaGiocatori.get(this.turnoGiocatore).setPosizione(this.tavoloDaGioco.getTavolo().get(nuovaPosizione));
-                System.out.println();
+                if(eventi.containsKey(nuovaPosizione)){
+                    int nuovaPosDopoEvento = this.tavoloDaGioco.getPosizioneConEvento(nuovaPosizione, valoreDado);
+                    System.out.println("Dopo l'imprevisto " + this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + nuovaPosDopoEvento);
+                    if(nuovaPosDopoEvento > 30){
+                        int nuovaPosDopoEventoESpostamento = 30 - (nuovaPosDopoEvento - 30);
+                        System.out.println("Dopo lo spostamento causato dall'eccesso " + this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + nuovaPosDopoEventoESpostamento);
+                        this.listaGiocatori.get(this.turnoGiocatore).setPosizione(this.tavoloDaGioco.getTavolo().get(nuovaPosDopoEventoESpostamento));
+                        System.out.println();
+                    }
+                    else{
+                        System.out.println("Dopo l'imprevisto " + this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + nuovaPosDopoEvento);
+                        this.listaGiocatori.get(this.turnoGiocatore).setPosizione(this.tavoloDaGioco.getTavolo().get(nuovaPosDopoEvento));
+                        System.out.println();
+                    }
+                }
+                else{
+                    this.listaGiocatori.get(this.turnoGiocatore).setPosizione(this.tavoloDaGioco.getTavolo().get(nuovaPosizione));
+                    System.out.println();
+                }
             }
             else{
                 System.out.println(this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + nuovaPosizione);
