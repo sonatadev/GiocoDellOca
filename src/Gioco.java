@@ -130,7 +130,7 @@ public class Gioco {
     }
 
     public void finePartita(){
-        System.out.println(this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " ha raggiungo la trentesima posizione e ha vinto!");
+        System.out.println(this.listaGiocatori.get(this.turnoGiocatore).getUsername() + ", proveniente da " + this.listaGiocatori.get(this.turnoGiocatore).getNazionalità() + ", ha raggiungo la trentesima posizione e ha vinto!");
         System.exit(0);
     }
 
