@@ -103,8 +103,8 @@ public class Gioco {
                 System.out.println("Dopo lo spostamento causato dall'eccesso " + this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + nuovaPosizione);
                 if(eventi.containsKey(nuovaPosizione)){
                     int nuovaPosDopoEvento = this.tavoloDaGioco.getPosizioneConEvento(nuovaPosizione, valoreDado);
-                    System.out.println("Dopo l'imprevisto " + this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + nuovaPosDopoEvento);
                     if(nuovaPosDopoEvento > 30){
+                        System.out.println("Dopo l'imprevisto " + this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + nuovaPosDopoEvento);
                         int nuovaPosDopoEventoESpostamento = 30 - (nuovaPosDopoEvento - 30);
                         System.out.println("Dopo lo spostamento causato dall'eccesso " + this.listaGiocatori.get(this.turnoGiocatore).getUsername() + " è finito sulla casella numero " + nuovaPosDopoEventoESpostamento);
                         this.listaGiocatori.get(this.turnoGiocatore).setPosizione(this.tavoloDaGioco.getTavolo().get(nuovaPosDopoEventoESpostamento));

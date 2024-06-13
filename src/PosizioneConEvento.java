@@ -1,4 +1,4 @@
-public class PosizioneConEvento extends Posizione implements Evento{
+public class PosizioneConEvento extends Posizione{
     private boolean annulla;
     private boolean fisso;
     private int valoreEvento;
@@ -15,14 +15,4 @@ public class PosizioneConEvento extends Posizione implements Evento{
         }
     }
 
-    @Override
-    public int getDistanzaEvento(int numeroPosizione) {
-        if(this.annulla)
-            return numeroPosizione;
-
-        if(this.fisso)
-            return this.valoreEvento;
-
-        return numeroPosizione += this.valoreEvento;
-    }
 }
